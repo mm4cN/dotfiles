@@ -1,6 +1,6 @@
-stow -t ~ -d alacritty
-stow -t ~ -d nvim
-stow -t ~ -d tmux
-stow -t ~ -d zsh
-stow -t ~ -d git
+stow -t ~ alacritty
+stow -t ~ nvim
+stow -t ~ tmux
+stow -t ~ zsh
+stow -t ~ git
 
