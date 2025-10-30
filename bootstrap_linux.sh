@@ -6,7 +6,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 apt update 
-apt install -y build-essential curl wget git git-lfs tmux fzf ripgrep zsh zsh-common xsel
+apt install -y build-essential curl wget git git-lfs tmux fzf ripgrep zsh zsh-common xsel batcat
 
 curl -fsSL https://pyenv.run | bash
 

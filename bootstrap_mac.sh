@@ -3,7 +3,7 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 brew install --cask font-meslo-lg-nerd-font
-brew install git git-lfs tmux fzf ripgrep pyenv zsh stow
+brew install git git-lfs tmux fzf ripgrep pyenv zsh stow bat
 
 git lfs install
 
