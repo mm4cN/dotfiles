@@ -59,10 +59,11 @@ return {
       automatic_enable = false,
     })
 
-    for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers()) do
-      vim.lsp.config(server_name, {
+    for server_name, server_settings in pairs(servers) do
+      vim.lsp.config[server_name] = {
+        settings = server_settings,
         capabilities = vim.lsp.protocol.make_client_capabilities(),
-      })
+      }
       vim.lsp.enable(server_name)
     end
 
