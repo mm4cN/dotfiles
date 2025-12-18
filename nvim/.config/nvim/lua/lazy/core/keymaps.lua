@@ -50,8 +50,6 @@ vim.keymap.set('n', "<C-l>g", ":LazyGit<cr>", { desc = "Open lazy git", noremap 
 --- Move
 vim.keymap.set({'n', 't'}, '<C-j>', ':MoveLine(1)<CR>', { noremap = true, silent = true, desc = "Move line down" })
 vim.keymap.set({'n', 't'}, '<C-k>', ':MoveLine(-1)<CR>', { noremap = true, silent = true, desc = "Move line up" })
-vim.keymap.set({'n', 't'}, '<C-h>', ':MoveHChar(-1)<CR>', { noremap = true, silent = true, desc = "Move char left" })
-vim.keymap.set({'n', 't'}, '<C-l>', ':MoveHChar(1)<CR>', { noremap = true, silent = true, desc = "Move char right" })
 
 --- NvimTree
 vim.keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer", noremap = true })
