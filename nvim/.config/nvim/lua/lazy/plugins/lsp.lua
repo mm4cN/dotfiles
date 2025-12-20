@@ -41,6 +41,7 @@ return {
       pyright = {},
       gopls = {},
       dockerls = {},
+      ts_ls = {},
     }
 
     require('mason').setup({
