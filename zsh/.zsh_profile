@@ -42,3 +42,5 @@ source <(fzf --zsh)
 
 # Powerlevel10k
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+[[ -f ~/.auths ]] && source ~/.auths
