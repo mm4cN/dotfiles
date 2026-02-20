@@ -13,7 +13,7 @@ return {
           allFeatures = true,
           loadOutDirsFromCheck = true,
           runBuildScripts = true,
-          },
+        },
         diagnostics = {
           enable = true,
           experimental = {
@@ -23,20 +23,20 @@ return {
       },
       lua_ls = {
         Lua = {
-          diagnostics = {globals = {'vim'}},
-          telementry = {enable = false},
+          diagnostics = { globals = { 'vim' } },
+          telementry = { enable = false },
           runtime = { version = "LuaJIT" },
           workspace = {
             checkThirdParty = false,
-              library = {
-                "${3rd}/luv/library",
-                unpack(vim.api.nvim_get_runtime_file("", true)),
-              },
+            library = {
+              "${3rd}/luv/library",
+              unpack(vim.api.nvim_get_runtime_file("", true)),
+            },
           },
           completion = { callSnippet = "Replace" },
         },
       },
-      clangd = {},
+      clangd = { source = "ccls" },
       neocmake = {},
       pyright = {},
       gopls = {},
@@ -67,7 +67,5 @@ return {
       }
       vim.lsp.enable(server_name)
     end
-
   end,
 }
-
