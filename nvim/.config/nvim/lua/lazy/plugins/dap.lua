@@ -34,11 +34,5 @@ return {
       command = "lldb-dap",
       name = "lldb"
     }
-
-    vscode.load_launchjs(nil, {
-      lldb = { "c", "cpp", "rust"},
-      }
-    )
   end,
 }
-
