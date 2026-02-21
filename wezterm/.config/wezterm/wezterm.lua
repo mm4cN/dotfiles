@@ -9,7 +9,10 @@ end)
 
 local config = wezterm.config_builder()
 
-config.enable_tab_bar = false
+config.enable_tab_bar = true
+config.use_fancy_tab_bar = false
+config.tab_bar_at_bottom = true
+
 config.default_cursor_style = "BlinkingBlock"
 config.color_scheme = 'Tokyo Night'
 config.window_decorations = "RESIZE" -- "NONE"
