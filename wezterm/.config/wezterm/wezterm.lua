@@ -11,11 +11,13 @@ local config = wezterm.config_builder()
 
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false
-config.tab_bar_at_bottom = true
+config.tab_bar_at_bottom = false
 
 config.default_cursor_style = "BlinkingBlock"
 config.color_scheme = 'Tokyo Night'
 config.window_decorations = "RESIZE" -- "NONE"
 config.window_close_confirmation = 'AlwaysPrompt'
+
+require("keys")(config)
 
 return config
