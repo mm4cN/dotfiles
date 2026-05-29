@@ -9,4 +9,7 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.zsh_profile ]] || source ~/.zsh_profile
+. "$HOME/.cargo/env"
+export PATH="$HOME/.local/bin:$PATH"
+[[ ! -f ~/.auths ]] || source ~/.auths
 

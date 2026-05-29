@@ -9,6 +9,7 @@
     git
     git-lfs
 
+    uv
     nodejs
     python313
     neovim
