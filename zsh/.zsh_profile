@@ -12,16 +12,13 @@ bindkey '^[[B' history-search-forward
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
-# zsh-syntax-highlighting
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init - zsh)"
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
-
-eval "$(pyenv init --path)"
+# eval "$(pyenv init --path)"
 PROMPT=${PROMPT/\%c/\%~}
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 alias sl='ls'
 
 # FZF
@@ -38,9 +35,11 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'tree -C {}'"
-source <(fzf --zsh)
+# source <(fzf --zsh)
 
-# Powerlevel10k
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 [[ -f ~/.auths ]] && source ~/.auths
+

@@ -8,6 +8,9 @@ wezterm.on("gui-startup", function()
 end)
 
 local config = wezterm.config_builder()
+config.front_end = "OpenGL"
+config.max_fps = 120
+config.term = "wezterm"
 
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false
@@ -17,7 +20,5 @@ config.default_cursor_style = "BlinkingBlock"
 config.color_scheme = 'Tokyo Night'
 config.window_decorations = "RESIZE" -- "NONE"
 config.window_close_confirmation = 'AlwaysPrompt'
-
-require("keys")(config)
 
 return config

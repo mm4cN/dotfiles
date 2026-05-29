@@ -1,12 +1,6 @@
 { pkgs, ... }:
 
-let
-  username = builtins.getEnv "USER";
-in
 {
-  home.username = username;
-  home.homeDirectory = "/Users/${username}";
-
   home.stateVersion = "25.05";
 
   programs.home-manager.enable = true;
