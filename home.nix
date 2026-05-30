@@ -2,6 +2,7 @@
 
 {
   home.stateVersion = "25.05";
+  home.enableNixpkgsReleaseCheck = false;
 
   programs.home-manager.enable = true;
 
@@ -23,6 +24,7 @@
     fzf
     jq
     bat
+    tree
 
     cmake
     ninja
@@ -44,6 +46,9 @@
 
   home.file.".zshrc".source =
     ./zsh/.zshrc;
+
+  home.file.".zsh_profile".source = 
+    ./zsh/.zsh_profile;
 
   home.file.".tmux.conf".source =
     ./tmux/.tmux.conf;
