@@ -43,6 +43,8 @@
     golangci-lint
     delve
     gofumpt
+
+    ollama
   ];
 
   home.file.".config/nvim".source =
