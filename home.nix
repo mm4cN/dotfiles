@@ -51,9 +51,6 @@
   home.file.".config/wezterm".source =
     ./wezterm/.config/wezterm;
 
-  home.file.".gitconfig".source =
-    ./git/.gitconfig;
-
   home.file.".zshrc".source =
     ./zsh/.zshrc;
 
