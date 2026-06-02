@@ -5,6 +5,14 @@
   home.enableNixpkgsReleaseCheck = false;
 
   programs.home-manager.enable = true;
+  programs.zsh = {
+    enable = true;
+    oh-my-zsh = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [ "git" "sudo" "docker" "zsh-ssh" "zsh-syntax-highlighting" "zsh-completions" ];
+    };
+  };
 
   home.packages = with pkgs; [
     git
@@ -16,8 +24,8 @@
     neovim
     tmux
     wezterm
+    lazygit
 
-    llvmPackages.clang
     llvmPackages.clang-tools
 
     ripgrep
@@ -33,6 +41,8 @@
     go
     gopls
     golangci-lint
+    delve
+    gofumpt
   ];
 
   home.file.".config/nvim".source =
