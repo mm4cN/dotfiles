@@ -18,6 +18,7 @@
     git
     git-lfs
 
+    htop
     uv
     nodejs
     python313
