@@ -29,6 +29,7 @@
 
     llvmPackages.clang-tools
 
+    fd
     ripgrep
     fzf
     jq
