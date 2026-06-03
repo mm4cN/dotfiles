@@ -45,6 +45,10 @@
     delve
     gofumpt
 
+    mediainfo
+    sox
+    ffmpeg
+
     ollama
   ];
 
