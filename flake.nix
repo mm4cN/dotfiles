@@ -23,12 +23,13 @@
     homeConfigurations.${username} =
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-
         modules = [
           ./home.nix
           {
             home.username = username;
-            home.homeDirectory = "/Users/${username}";
+            home.homeDirectory = if (builtins.match ".*darwin.*" system != null)
+              then "/Users/${username}"
+              else "/home/${username}";
           }
         ];
       };

@@ -15,6 +15,7 @@
   };
 
   home.packages = with pkgs; [
+    nerd-fonts.meslo-lg
     git
     git-lfs
 
