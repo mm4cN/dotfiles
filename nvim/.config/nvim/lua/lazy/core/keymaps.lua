@@ -55,9 +55,6 @@ vim.keymap.set({'n', 't'}, '<C-k>', ':MoveLine(-1)<CR>', { noremap = true, silen
 vim.keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer", noremap = true })
 vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file", noremap = true })
 
---- Render Markdown
-vim.keymap.set("n", "<leader>rmd", ":RenderMarkdown toggle<CR>", { desc = "Render Markdown file", noremap = true })
-
 --- Telescope
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
 vim.keymap.set("n", "<leader><leader>", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
@@ -66,19 +63,9 @@ vim.keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Fi
 
 --- GitBlame
 vim.keymap.set("n", "<leader>gbt", ":GitBlameToggle<CR>", { desc = "Git Blame: Toggle", noremap = true })
-
--- Neotest
-vim.keymap.set("n", "<leader>ntt", function() require("neotest").run.run() end, { desc = "Neotest: run nearest test" })
-vim.keymap.set("n", "<leader>ntf", function() require("neotest").run.run(vim.fn.expand("%")) end, { desc = "Neotest: run file" })
-vim.keymap.set("n", "<leader>nta", function() require("neotest").run.run({ suite = true }) end, { desc = "Neotest: run all tests" })
-vim.keymap.set("n", "<leader>nts", function() require("neotest").summary.toggle() end, { desc = "Neotest: toggle summary" })
-vim.keymap.set("n", "<leader>nto", function() require("neotest").output.open({ enter = true, auto_close = true }) end, { desc = "Neotest: open output window" })
-
 -- PlatformIO
 vim.keymap.set("n", "<leader>pin", ":Pioinit<CR>", { desc = "PlatformIO: Init", noremap = true })
 vim.keymap.set("n", "<leader>pic", ":Piorun clean<CR>", { desc = "PlatformIO: Clean", noremap = true })
 vim.keymap.set("n", "<leader>pib", ":Piorun build<CR>", { desc = "PlatformIO: Build", noremap = true })
 vim.keymap.set("n", "<leader>piu", ":Piorun upload<CR>", { desc = "PlatformIO: Upload", noremap = true })
 
--- CopilotChat
-vim.keymap.set("n", "<leader>cct", ":CopilotChatToggle<CR>", { desc = "Copilot Chat: Toggle", noremap = true })
