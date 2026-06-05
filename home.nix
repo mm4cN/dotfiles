@@ -18,6 +18,7 @@
     nerd-fonts.meslo-lg
     git
     git-lfs
+    delta
 
     htop
     uv
