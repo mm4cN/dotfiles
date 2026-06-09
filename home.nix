@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   zsh-ssh = pkgs.fetchFromGitHub {
@@ -61,50 +61,53 @@ in
       sl = "ls";
     };
 
-    initExtraBeforeCompInit = ''
-      CASE_SENSITIVE="true"
-      fpath+=("${pkgs.zsh-completions}/share/zsh/site-functions")
-    '';
+    initContent = lib.mkMerge [
+      (lib.mkOrder 550 ''
+        CASE_SENSITIVE="true"
+        fpath+=("${pkgs.zsh-completions}/share/zsh/site-functions")
+      '')
 
-    initExtra = ''
-      zstyle ':omz:update' mode auto
-      zstyle ':completion:*:*:docker:*' option-stacking yes
-      zstyle ':completion:*:*:docker-*:*' option-stacking yes
+      ''
+        zstyle ':omz:update' mode auto
+        zstyle ':completion:*:*:docker:*' option-stacking yes
+        zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
-      setopt hist_verify
+        setopt hist_verify
 
-      bindkey '^[[A' history-search-backward
-      bindkey '^[[B' history-search-forward
-      bindkey "^[[1;3C" forward-word
-      bindkey "^[[1;3D" backward-word
+        bindkey '^[[A' history-search-backward
+        bindkey '^[[B' history-search-forward
+        bindkey "^[[1;3C" forward-word
+        bindkey "^[[1;3D" backward-word
 
-      PROMPT=''${PROMPT/\%c/\%~}
+        PROMPT=''${PROMPT/\%c/\%~}
 
-      export FZF_DEFAULT_OPTS=" \
-      --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
-      --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
-      --color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
-      --color=selected-bg:#494d64 \
-      --multi"
+        export FZF_DEFAULT_OPTS=" \
+        --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+        --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
+        --color=marker:#b7bdf8,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
+        --color=selected-bg:#494d64 \
+        --multi"
 
-      export FZF_CTRL_T_OPTS="
-        --walker-skip .git,node_modules,target
-        --preview 'bat -n --color=always {}'
-        --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+        export FZF_CTRL_T_OPTS="
+          --walker-skip .git,node_modules,target
+          --preview 'bat -n --color=always {}'
+          --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
-      export FZF_ALT_C_OPTS="
-        --walker-skip .git,node_modules,target
-        --preview 'tree -C {}'"
+        export FZF_ALT_C_OPTS="
+          --walker-skip .git,node_modules,target
+          --preview 'tree -C {}'"
 
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-      [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
-      [[ -f ~/.auths ]] && source ~/.auths
-      [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+        [[ -f ~/.auths ]] && source ~/.auths
+        [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
-      export PATH="$HOME/.local/bin:$PATH"
-    '';
+        export PATH="$HOME/.local/bin:$PATH"
+      ''
+    ];
+
   };
 
   programs.fzf = {
@@ -126,6 +129,7 @@ in
     tmux
     wezterm
     lazygit
+    lazydocker
 
     llvmPackages.clang-tools
 
