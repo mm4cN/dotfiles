@@ -208,6 +208,7 @@ in
     # Utilities
     nixd
     nixfmt-rfc-style
+    glab
   ];
 
   home.file.".config/nvim".source = ./nvim/.config/nvim;
