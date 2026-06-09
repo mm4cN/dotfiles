@@ -10,29 +10,34 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, mac-app-util, ... }:
-  let
-    system = "aarch64-darwin";
-    username = "marekmacznik";
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      mac-app-util,
+      ...
+    }:
+    let
+      system = "aarch64-darwin";
+      username = "marekmacznik";
 
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in {
-    homeConfigurations.${username} =
-      home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
           mac-app-util.homeManagerModules.default
           ./home.nix
           {
             home.username = username;
-            home.homeDirectory = if (builtins.match ".*darwin.*" system != null)
-              then "/Users/${username}"
-              else "/home/${username}";
+            home.homeDirectory =
+              if (builtins.match ".*darwin.*" system != null) then "/Users/${username}" else "/home/${username}";
           }
         ];
       };
-  };
+    };
 }

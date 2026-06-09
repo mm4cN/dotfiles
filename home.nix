@@ -8,7 +8,7 @@ let
     hash = "sha256-1yJasYai4+T8j76lCvIhSFh4fm7VUoF4F4E+v8WSr2I=";
   };
 
-  ohMyZshCustom = pkgs.runCommand "oh-my-zsh-custom" {} ''
+  ohMyZshCustom = pkgs.runCommand "oh-my-zsh-custom" { } ''
     mkdir -p $out/plugins
     ln -s ${zsh-ssh} $out/plugins/zsh-ssh
   '';
@@ -28,6 +28,16 @@ in
   home.enableNixpkgsReleaseCheck = false;
 
   programs.home-manager.enable = true;
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.zsh = {
     enable = true;
@@ -110,13 +120,7 @@ in
 
   };
 
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
   home.packages = with pkgs; [
-
     # Fonts
     nerd-fonts.meslo-lg
 
@@ -200,14 +204,15 @@ in
     # General programming
     bear
     ccache
+
+    # Utilities
+    nixd
+    nixfmt-rfc-style
   ];
 
-  home.file.".config/nvim".source =
-    ./nvim/.config/nvim;
+  home.file.".config/nvim".source = ./nvim/.config/nvim;
 
-  home.file.".config/wezterm".source =
-    ./wezterm/.config/wezterm;
+  home.file.".config/wezterm".source = ./wezterm/.config/wezterm;
 
-  home.file.".tmux.conf".source =
-    ./tmux/.tmux.conf;
+  home.file.".tmux.conf".source = ./tmux/.tmux.conf;
 }

@@ -42,6 +42,11 @@ return {
       gopls = {},
       dockerls = {},
       ts_ls = {},
+      nixd = {
+        formatting = {
+          command = { "nixfmt" },
+        },
+      },
     }
 
     require('mason').setup({
