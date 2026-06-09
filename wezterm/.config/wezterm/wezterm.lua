@@ -10,7 +10,7 @@ end)
 local config = wezterm.config_builder()
 config.front_end = "OpenGL"
 config.max_fps = 120
-config.term = "wezterm"
+config.term = "xterm-256color"
 
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false

@@ -3,14 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
+    mac-app-util.url = "github:hraban/mac-app-util";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, mac-app-util, ... }:
   let
     system = "aarch64-darwin";
     username = "marekmacznik";
@@ -24,6 +24,7 @@
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
+          mac-app-util.homeManagerModules.default
           ./home.nix
           {
             home.username = username;
