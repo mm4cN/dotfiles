@@ -116,49 +116,90 @@ in
   };
 
   home.packages = with pkgs; [
+
+    # Fonts
     nerd-fonts.meslo-lg
+
+    # Shell & Terminal
+    zsh-completions
+    tmux
+    wezterm
+
+    # Editor
+    neovim
+
+    # Git
     git
     git-lfs
     delta
-
-    htop
-    uv
-    nodejs
-    python313
-    neovim
-    tmux
-    wezterm
     lazygit
+
+    # Containers
     lazydocker
 
-    llvmPackages.clang-tools
-
+    # Search & CLI utilities
     fd
     ripgrep
     fzf
-    jq
     bat
     tree
+    htop
 
-    conanNoTests
-    platformioNoTests
+    # Python
+    python313
+    uv
+
+    # Node.js
+    nodejs
+
+    # C/C++
+    llvmPackages.clang-tools
     cmake
     ninja
+    conanNoTests
 
-    rustup
+    # Embedded
+    platformioNoTests
+
+    # Go
     go
     gopls
     golangci-lint
     delve
     gofumpt
 
+    # Rust
+    rustup
+
+    # Multimedia
+    ffmpeg
     mediainfo
     sox
-    ffmpeg
 
+    # AI / LLM
     ollama
 
-    zsh-completions
+    # Networking
+    curl
+    wget
+
+    # Archives
+    unzip
+    zip
+
+    # JSON/YAML
+    yq
+    jq
+
+    # Navigation
+    zoxide
+
+    # Measurements
+    hyperfine
+
+    # General programming
+    bear
+    ccache
   ];
 
   home.file.".config/nvim".source =
