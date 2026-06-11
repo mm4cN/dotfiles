@@ -69,6 +69,7 @@ in
 
     shellAliases = {
       sl = "ls";
+      cd = "z";
     };
 
     initContent = lib.mkMerge [
