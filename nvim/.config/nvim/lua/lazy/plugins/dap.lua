@@ -31,7 +31,7 @@ return {
 
     dap.adapters.lldb = {
       type = "executable",
-      command = "lldb-dap",
+      command = vim.fn.expand("$HOME/.nix-profile/bin/lldb-dap"),
       name = "lldb"
     }
   end,

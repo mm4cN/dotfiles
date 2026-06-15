@@ -161,6 +161,7 @@ in
     llvmPackages.clang-tools
     ninja
     conanNoTests
+    lldb
 
     # Embedded
     platformioNoTests
