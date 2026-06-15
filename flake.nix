@@ -6,38 +6,71 @@
     mac-app-util.url = "github:hraban/mac-app-util";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpgs.follows = "nixpkgs";
     };
   };
 
-  outputs =
-    {
+  outputs = {
       nixpkgs,
       home-manager,
       mac-app-util,
       ...
-    }:
-    let
-      system = "aarch64-darwin";
-      username = "marekmacznik";
-
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
+  }@inputs:
+  let
+    mkHome = 
+      { system, username, homeDirectory, extraModules ? [ ] }:
+      let 
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+        isDarwin = nixpkgs.lib.hasSuffix "darwin" system;
+        in
+          home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              modules = [
+                ./home.nix
+                {
+                  home.username = username;
+                  home.homeDirectory = homeDirectory;
+                }
+              ]
+              ++ nixpkgs.lib.optional isDarwin mac-app-util.homeManagerModules.default
+              ++ extraModules;
+          };
+          mkCmake331 = pkgs: pkgs.cmake.overrideAttrs (old: {
+            pname = "cmake";
+            version = "3.31.12";
+            src = pkgs.fetchurl {
+              url = "https://github.com/Kitware/CMake/archive/v3.31.12.tar.gz";
+              sha256 = "sha256-P9snqYGXLWP/9disZ/NI/zubDoMWjwIShApTal/yJI8=";
+            };
+            patches = [];
+            patchPhase = ''
+              # no-op: upstream sources don't need nixpkgs patches
+            '';
+            });
+  in {
+    lib.mkHome = mkHome;
+    homeConfigurations = {
+      "darwin-home" = mkHome {
+          system = "aarch64-darwin";
+          username = "marekmacznik";
+          homeDirectory = "/Users/marekmacznik";
+          extraModules = [
+            ({pkgs, ...}: {home.packages = [ pkgs.cmake ]; })
+          ];
       };
-    in
-    {
-      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          mac-app-util.homeManagerModules.default
-          ./home.nix
-          {
-            home.username = username;
-            home.homeDirectory =
-              if (builtins.match ".*darwin.*" system != null) then "/Users/${username}" else "/home/${username}";
-          }
+
+      "linux-home" = mkHome {
+        system = "x86_64-linux";
+        username = "mm4cN";
+        homeDirectory = "/home/mm4cN";
+        extraModules = [
+          ({pkgs, ...}: {home.packages = [ mkCmake331 pkgs ]; })
         ];
       };
+
     };
+  };
 }

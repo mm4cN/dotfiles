@@ -159,7 +159,6 @@ in
 
     # C/C++
     llvmPackages.clang-tools
-    cmake
     ninja
     conanNoTests
 
