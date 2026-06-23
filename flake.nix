@@ -6,7 +6,7 @@
     mac-app-util.url = "github:hraban/mac-app-util";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -63,11 +63,11 @@
       };
 
       "linux-home" = mkHome {
-        system = "x86_64-linux";
-        username = "mm4cN";
-        homeDirectory = "/home/mm4cN";
+        system = "aarch64-linux";
+        username = "marekmacznik";
+        homeDirectory = "/home/marekmacznik";
         extraModules = [
-          ({pkgs, ...}: {home.packages = [ mkCmake331 pkgs ]; })
+          ({pkgs, ...}: {home.packages = [ (mkCmake331 pkgs) ]; })
         ];
       };
 

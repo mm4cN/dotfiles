@@ -39,6 +39,20 @@ in
     enableZshIntegration = true;
   };
 
+  
+  programs.bash = lib.mkIf pkgs.stdenv.isLinux {
+    enable = true;
+    initExtra = ''
+      case $- in
+        *i*)
+          if command -v zsh >/dev/null 2>&1 && [[ -z "$ZSH_VERSION" ]]; then
+            exec zsh
+          fi
+          ;;
+      esac
+    '';
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
