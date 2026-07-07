@@ -1,7 +1,8 @@
 vim.keymap.set('v', '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>p', '"+p')
 vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>wt', [[:%s/\s\+$//e<CR>]], { noremap =  true, silent = true, desc = "Trim trailing whitespaces" })
+vim.keymap.set('n', '<leader>wt', [[:%s/\s\+$//e<CR>]],
+  { noremap = true, silent = true, desc = "Trim trailing whitespaces" })
 vim.keymap.set('n', '<leader>q', ':q<CR>', { noremap = true, silent = true, desc = "Quit" })
 vim.keymap.set('n', '<leader>qq', ':q!<CR>', { noremap = true, silent = true, desc = "Force quit" })
 vim.keymap.set('n', '<leader>qqq', ':qa!<CR>', { noremap = true, silent = true, desc = "Quit that should've listened" })
@@ -34,7 +35,8 @@ vim.keymap.set('n', "<leader>cou", ":Conan upload<CR>", { desc = "Conan: upload"
 --- DAP
 local dap = require("dap")
 vim.keymap.set("n", "<leader>db", function() dap.toggle_breakpoint() end, { desc = "DAP: Toggle breakpoint" })
-vim.keymap.set("n", "<leader>dB", function() dap.toggle_breakpoint(vim.fn.input("Condition: ")) end, { desc = "DAP: Toggle conditional breakpoint" })
+vim.keymap.set("n", "<leader>dB", function() dap.toggle_breakpoint(vim.fn.input("Condition: ")) end,
+  { desc = "DAP: Toggle conditional breakpoint" })
 vim.keymap.set("n", "<leader>dso", function() dap.step_over() end, { desc = "DAP: Step over" })
 vim.keymap.set("n", "<leader>dsi", function() dap.step_into() end, { desc = "DAP: Step into" })
 vim.keymap.set("n", "<leader>dst", function() dap.step_out() end, { desc = "DAP: Step out" })
@@ -42,18 +44,19 @@ vim.keymap.set("n", "<leader>dc", function() dap.continue() end, { desc = "DAP: 
 vim.keymap.set("n", "<leader>dt", function() dap.terminate() end, { desc = "DAP: Terminate " })
 
 --- Floatterm
-vim.keymap.set('n', '<leader>tt', ":FloatermToggle<CR>", { desc = "Floatterm: Toggle", noremap = true} )
+vim.keymap.set('n', '<leader>tt', ":FloatermToggle<CR>", { desc = "Floatterm: Toggle", noremap = true })
 
 --- Lazygit
 vim.keymap.set('n', "<C-l>g", ":LazyGit<cr>", { desc = "Open lazy git", noremap = true })
 
 --- Move
-vim.keymap.set({'n', 't'}, '<C-j>', ':MoveLine(1)<CR>', { noremap = true, silent = true, desc = "Move line down" })
-vim.keymap.set({'n', 't'}, '<C-k>', ':MoveLine(-1)<CR>', { noremap = true, silent = true, desc = "Move line up" })
+vim.keymap.set({ 'n', 't' }, '<C-j>', ':MoveLine(1)<CR>', { noremap = true, silent = true, desc = "Move line down" })
+vim.keymap.set({ 'n', 't' }, '<C-k>', ':MoveLine(-1)<CR>', { noremap = true, silent = true, desc = "Move line up" })
 
 --- NvimTree
 vim.keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer", noremap = true })
-vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file", noremap = true })
+vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>",
+  { desc = "Toggle file explorer on current file", noremap = true })
 
 --- Telescope
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
@@ -69,3 +72,59 @@ vim.keymap.set("n", "<leader>pic", ":Piorun clean<CR>", { desc = "PlatformIO: Cl
 vim.keymap.set("n", "<leader>pib", ":Piorun build<CR>", { desc = "PlatformIO: Build", noremap = true })
 vim.keymap.set("n", "<leader>piu", ":Piorun upload<CR>", { desc = "PlatformIO: Upload", noremap = true })
 
+--- CodeCompanion
+vim.keymap.set("n", "<leader>aa", "<cmd>CodeCompanionActions<CR>", {
+  desc = "AI: Actions",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat Toggle<CR>", {
+  desc = "AI: Toggle chat",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set({ "n", "v" }, "<leader>ai", "<cmd>CodeCompanion<CR>", {
+  desc = "AI: Inline prompt",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>aC", "<cmd>CodeCompanionCLI<CR>", {
+  desc = "AI: CLI agent",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>apc", function()
+  require("codecompanion").prompt("cpp-conan")
+end, {
+  desc = "AI: C++ / Conan agent",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>apr", function()
+  require("codecompanion").prompt("rust")
+end, {
+  desc = "AI: Rust agent",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>apg", function()
+  require("codecompanion").prompt("gitlab-ci")
+end, {
+  desc = "AI: GitLab CI agent",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>apn", function()
+  require("codecompanion").prompt("nvim-plugin")
+end, {
+  desc = "AI: Neovim plugin agent",
+  noremap = true,
+  silent = true,
+})
