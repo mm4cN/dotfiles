@@ -146,6 +146,7 @@ in
 
     # Editor
     neovim
+    tree-sitter
 
     # Git
     git
