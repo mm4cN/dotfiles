@@ -6,10 +6,6 @@ return {
     "windwp/nvim-ts-autotag",
   },
   opts = {
-    highlight = {
-      enable = true,
-    },
-    indent = { enable = true },
     autotag = {
       enable = true,
     },
@@ -44,5 +40,14 @@ return {
         node_decremental = "<bs>",
       },
     },
+    highlight = {
+      enable = true,
+      disable = { "markdown", "markdown_inline" },
+    },
+    indent = {
+      enable = true,
+      disable = { "markdown", "markdown_inline" },
+    },
   }
+
 }
