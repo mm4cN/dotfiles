@@ -89,10 +89,17 @@ return {
         },
 
         display = {
+          action_palette = {
+            provider = "telescope",
+            title = " CodeCompanion actions ",
+            show_action_kind = true,
+          },
+
           chat = {
             intro_message = "󰚩 CodeCompanion ready. Press ? for spells.",
             separator = "─",
-            show_settings = true,
+            show_settings = false,
+            show_token_count = true,
 
             window = {
               layout = "vertical",
@@ -116,7 +123,6 @@ return {
             },
           },
         },
-
         prompt_library = require("ai.codecompanion.prompts").load(),
 
         opts = {
@@ -128,42 +134,9 @@ return {
     config = function(_, opts)
       require("codecompanion").setup(opts)
 
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "codecompanion",
-          "codecompanion-chat",
-        },
-        callback = function()
-          pcall(vim.treesitter.stop)
+      local config = require("codecompanion.config")
 
-          vim.bo.indentexpr = ""
-
-          vim.opt_local.number = false
-          vim.opt_local.relativenumber = false
-          vim.opt_local.signcolumn = "no"
-          vim.opt_local.foldcolumn = "0"
-          vim.opt_local.cursorline = false
-          vim.opt_local.wrap = true
-          vim.opt_local.linebreak = true
-          vim.opt_local.breakindent = true
-          vim.opt_local.spell = false
-          vim.opt_local.list = false
-          vim.opt_local.colorcolumn = ""
-        end,
-      })
-
-      vim.api.nvim_set_hl(0, "CodeCompanionChatHeader", {
-        bold = true,
-        italic = false,
-      })
-
-      vim.api.nvim_set_hl(0, "CodeCompanionChatSeparator", {
-        bold = true,
-      })
-
-      vim.api.nvim_set_hl(0, "CodeCompanionChatTokens", {
-        italic = true,
-      })
+      config.display.chat.window.opts.laststatus = nil
     end,
   },
 }

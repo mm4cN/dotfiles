@@ -223,7 +223,7 @@ in
 
     # Utilities
     nixd
-    nixfmt-rfc-style
+    nixfmt
     glab
   ];
 
