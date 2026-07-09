@@ -232,4 +232,6 @@ in
   home.file.".config/wezterm".source = ./wezterm/.config/wezterm;
 
   home.file.".tmux.conf".source = ./tmux/.tmux.conf;
+
+  home.file.".copilot/mcp-config.json".source = ./copilot/.copilot/mcp-config.json;
 }

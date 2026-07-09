@@ -26,7 +26,7 @@ return {
 
         strategies = {
           chat = {
-            adapter = "copilot",
+            adapter = "copilot_acp",
             completion_provider = nil,
             roles = {
               user = "mm4cn",
@@ -63,7 +63,7 @@ return {
               dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
 
               title_generation_opts = {
-                adapter = nil,
+                adapter = "copilot",
                 model = nil,
                 refresh_every_n_prompts = 0,
                 max_refreshes = 3,
@@ -151,6 +151,12 @@ return {
 
     config = function(_, opts)
       require("codecompanion").setup(opts)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "codecompanion",
+        callback = function()
+          vim.treesitter.start(0, "markdown")
+        end,
+      })
       require("codecompanion.config").display.chat.window.opts.laststatus = nil
 
       local spinner = {

@@ -58,7 +58,7 @@
           username = "marekmacznik";
           homeDirectory = "/Users/marekmacznik";
           extraModules = [
-            ({pkgs, ...}: {home.packages = [ pkgs.cmake ]; })
+            ({pkgs, ...}: {home.packages = [ pkgs.cmake pkgs.github-copilot-cli ]; })
           ];
       };
 
