@@ -1,56 +1,77 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  branch = "main",
-  event = { "BufReadPre", "BufNewFile" },
-  build = ":TSUpdate",
-  main = "nvim-treesitter",
-  dependencies = {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
+
+    config = function()
+      local ts = require("nvim-treesitter")
+
+      ts.setup({
+        install_dir = vim.fn.stdpath("data") .. "/site",
+      })
+
+      local parsers = {
+        "bash",
+        "c",
+        "cpp",
+        "dockerfile",
+        "gitignore",
+        "go",
+        "gomod",
+        "gosum",
+        "gowork",
+        "html",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "rust",
+        "vim",
+        "vimdoc",
+        "yaml",
+        "zsh",
+      }
+
+      ts.install(parsers)
+
+      local disabled = {
+        markdown = true,
+        markdown_inline = true,
+      }
+
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local ft = vim.bo[args.buf].filetype
+
+          if disabled[ft] then
+            return
+          end
+
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local ft = vim.bo[args.buf].filetype
+
+          if disabled[ft] then
+            return
+          end
+
+          vim.bo[args.buf].indentexpr =
+          "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+    end,
+  },
+
+  {
     "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    opts = {},
   },
-  opts = {
-    install_dir = vim.fn.stdpath("data") .. "/site",
-
-    autotag = {
-      enable = true,
-    },
-
-    ensure_installed = {
-      "json", "jsonc", "yaml", "html",
-      "markdown", "markdown_inline",
-      "bash", "lua", "vim",
-      "dockerfile", "gitignore", "vimdoc",
-      "c", "cpp", "rust", "python", "go",
-      "gomod", "gosum", "gowork", "bash", "zsh",
-    },
-
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<C-space>",
-        node_incremental = "<C-space>",
-        scope_incremental = false,
-        node_decremental = "<bs>",
-      },
-    },
-
-    highlight = {
-      enable = true,
-      disable = { "markdown", "markdown_inline" },
-    },
-
-    indent = {
-      enable = true,
-      disable = { "markdown", "markdown_inline" },
-    },
-  },
-
-  config = function(_, opts)
-    if vim.treesitter
-        and vim.treesitter.language
-        and not vim.treesitter.language.ft_to_lang
-        and vim.treesitter.language.get_lang then
-      vim.treesitter.language.ft_to_lang = vim.treesitter.language.get_lang
-    end
-    require("nvim-treesitter").setup(opts)
-  end,
 }

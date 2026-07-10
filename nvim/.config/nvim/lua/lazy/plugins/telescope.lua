@@ -1,11 +1,16 @@
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
+  branch = "master",
+
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+    },
     "nvim-tree/nvim-web-devicons",
   },
+
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
@@ -14,11 +19,13 @@ return {
       defaults = {
         path_display = { "smart" },
         layout_strategy = "vertical",
+
         mappings = {
           i = {
-            ["<C-k>"] = actions.move_selection_previous, -- move to prev result
-            ["<C-j>"] = actions.move_selection_next, -- move to next result
-            ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            ["<C-k>"] = actions.move_selection_previous,
+            ["<C-j>"] = actions.move_selection_next,
+            ["<C-q>"] = actions.send_selected_to_qflist
+              + actions.open_qflist,
           },
         },
       },
@@ -27,4 +34,3 @@ return {
     telescope.load_extension("fzf")
   end,
 }
-
