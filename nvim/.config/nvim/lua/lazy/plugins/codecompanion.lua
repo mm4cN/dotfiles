@@ -26,7 +26,7 @@ return {
 
         strategies = {
           chat = {
-            adapter = "copilot_acp",
+            adapter = "copilot",
             completion_provider = nil,
             roles = {
               user = "mm4cn",
