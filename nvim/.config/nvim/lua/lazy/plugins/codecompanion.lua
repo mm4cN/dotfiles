@@ -114,7 +114,7 @@ return {
           chat = {
             intro_message = "󰚩 CodeCompanion ready. Press ? for spells.",
             separator = "─",
-            show_settings = true,
+            show_settings = false,
             show_token_count = true,
             show_reasoning = false,
             fold_context = true,
