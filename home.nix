@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   zsh-ssh = pkgs.fetchFromGitHub {
@@ -26,6 +26,14 @@ in
 {
   home.stateVersion = "25.05";
   home.enableNixpkgsReleaseCheck = false;
+
+    home.file.".npmrc".text = ''
+    prefix=${config.home.homeDirectory}/.local/npm
+  '';
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.local/npm/bin"
+    "${config.home.homeDirectory}/.local/bin"
+  ];
 
   programs.home-manager.enable = true;
 
@@ -129,7 +137,6 @@ in
         [[ -f ~/.auths ]] && source ~/.auths
         [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
-        export PATH="$HOME/.local/bin:$PATH"
       ''
     ];
 
@@ -166,7 +173,6 @@ in
     htop
 
     # Python
-    python313
     uv
 
     # Node.js

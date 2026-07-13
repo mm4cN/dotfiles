@@ -58,7 +58,7 @@
           username = "marekmacznik";
           homeDirectory = "/Users/marekmacznik";
           extraModules = [
-            ({pkgs, ...}: {home.packages = [ pkgs.cmake ]; })
+            ({pkgs, ...}: {home.packages = [ pkgs.python313 pkgs.cmake ]; })
           ];
       };
 
@@ -67,7 +67,16 @@
         username = "marekmacznik";
         homeDirectory = "/home/marekmacznik";
         extraModules = [
-          ({pkgs, ...}: {home.packages = [ (mkCmake331 pkgs) ]; })
+          ({pkgs, ...}: {home.packages = [ (mkCmake331 pkgs) pkgs.python311 ]; })
+        ];
+      };
+
+      "demo" = mkHome {
+        system = "aarch64-linux";
+        username = "user";
+        homeDirectory = "/home/user";
+        extraModules = [
+          ({pkgs, ...}: {home.packages = [ (mkCmake331 pkgs) pkgs.python311 pkgs.gcc pkgs.binutils pkgs.gnumake ]; })
         ];
       };
 

@@ -3,7 +3,7 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
-  build = "npm install -g mcp-hub@latest",
+  build = "bundled_build.lua",
   cmd = "MCPHub",
 
   config = function()
@@ -118,6 +118,7 @@ return {
     require("mcphub").setup({
       port = 3000,
       config = config_path,
+      use_bundled_binary = true,
     })
 
     vim.api.nvim_create_user_command("MCPHubRebuildConfig", function()
