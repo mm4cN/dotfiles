@@ -1,56 +1,66 @@
+local function copilot()
+  return {
+    name = "copilot",
+    model = "claude-sonnet-4.5",
+  }
+end
+
 return {
   {
     "olimorris/codecompanion.nvim",
     version = "^19.0.0",
     event = "VeryLazy",
+
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "ravitemer/codecompanion-history.nvim",
+
+      {
+        "bahaaza/mcphub.nvim",
+        name = "mcphub.nvim",
+      },
+
       "j-hui/fidget.nvim",
     },
 
     opts = function()
       return {
-        adapters = {
-          copilot = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "auto",
-                },
-              },
-            })
-          end,
-        },
-
-        strategies = {
+        interactions = {
           chat = {
-            adapter = "copilot",
-            completion_provider = nil,
+            adapter = copilot(),
+
             roles = {
               user = "mm4cn",
             },
           },
+
           inline = {
-            adapter = "copilot",
+            adapter = copilot(),
           },
+
           cmd = {
-            adapter = "copilot",
+            adapter = copilot(),
           },
         },
+
         extensions = {
           mcphub = {
             callback = "mcphub.extensions.codecompanion",
+
             opts = {
               make_vars = false,
+              make_tools = true,
               make_slash_commands = true,
               show_result_in_chat = true,
+              show_server_tools_in_chat = true,
+              add_mcp_prefix_to_tool_names = false,
             },
           },
 
           history = {
             enabled = true,
+
             opts = {
               keymap = "gh",
               save_chat_keymap = "sc",
@@ -60,13 +70,16 @@ return {
               auto_generate_title = true,
               continue_last_chat = false,
               delete_on_clearing_chat = false,
-              dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+
+              dir_to_save = vim.fn.stdpath("data")
+                  .. "/codecompanion-history",
 
               title_generation_opts = {
                 adapter = "copilot",
-                model = nil,
+                model = "claude-sonnet-4.5",
                 refresh_every_n_prompts = 0,
                 max_refreshes = 3,
+
                 format_title = function(original_title)
                   return original_title
                 end,
@@ -75,9 +88,10 @@ return {
               summary = {
                 create_summary_keymap = "gcs",
                 browse_summaries_keymap = "gbs",
+
                 generation_opts = {
-                  adapter = nil,
-                  model = nil,
+                  adapter = "copilot",
+                  model = "claude-sonnet-4.5",
                   context_size = 90000,
                   include_references = true,
                   include_tool_outputs = true,
@@ -87,9 +101,11 @@ return {
               memory = {
                 auto_create_memories_on_summary_generation = true,
                 vectorcode_exe = "vectorcode",
+
                 tool_opts = {
                   default_num = 10,
                 },
+
                 notify = true,
                 index_on_startup = false,
               },
@@ -124,6 +140,7 @@ return {
               width = 0.42,
               border = "rounded",
               title = " 󰚩 CodeCompanion ",
+
               opts = {
                 number = false,
                 relativenumber = false,
@@ -151,91 +168,120 @@ return {
 
     config = function(_, opts)
       require("codecompanion").setup(opts)
+
+      local treesitter_group = vim.api.nvim_create_augroup(
+        "mm4cn.codecompanion.treesitter",
+        { clear = true }
+      )
+
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "codecompanion",
-        callback = function()
-          vim.treesitter.start(0, "markdown")
+        group = treesitter_group,
+
+        callback = function(args)
+          if not vim.treesitter.highlighter.active[args.buf] then
+            pcall(vim.treesitter.start, args.buf, "markdown")
+          end
         end,
       })
-      require("codecompanion.config").display.chat.window.opts.laststatus = nil
+
+      local ok, progress = pcall(require, "fidget.progress")
+      if not ok then
+        return
+      end
 
       local spinner = {
+        handles = {},
         completed = "󰗡 Completed",
         error = " Error",
         cancelled = "󰜺 Cancelled",
       }
 
       local function format_adapter(adapter)
-        local parts = {}
-
-        if adapter.formatted_name then
-          table.insert(parts, adapter.formatted_name)
-        elseif adapter.name then
-          table.insert(parts, adapter.name)
-        else
-          table.insert(parts, "CodeCompanion")
+        if type(adapter) ~= "table" then
+          return "CodeCompanion"
         end
 
-        if adapter.model and adapter.model ~= "" then
-          table.insert(parts, "(" .. adapter.model .. ")")
+        local parts = {
+          adapter.formatted_name
+              or adapter.name
+              or "CodeCompanion",
+        }
+
+        local model = adapter.model
+
+        if type(model) == "table" then
+          model = model.name
+        end
+
+        if type(model) == "string" and model ~= "" then
+          table.insert(parts, "(" .. model .. ")")
         end
 
         return table.concat(parts, " ")
       end
 
-      local function codecompanion_spinner()
-        local ok, progress = pcall(require, "fidget.progress")
-        if not ok then
-          return
-        end
+      local spinner_group = vim.api.nvim_create_augroup(
+        "mm4cn.codecompanion.spinner",
+        { clear = true }
+      )
 
-        spinner.handles = {}
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "CodeCompanionRequestStarted",
+        group = spinner_group,
 
-        local group = vim.api.nvim_create_augroup("mm4cn.codecompanion.spinner", {
-          clear = true,
-        })
+        callback = function(args)
+          local data = args.data or {}
 
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "CodeCompanionRequestStarted",
-          group = group,
-          callback = function(args)
-            local handle = progress.handle.create({
-              title = "",
-              message = " Sending...",
-              lsp_client = {
-                name = format_adapter(args.data.adapter),
-              },
-            })
+          if not data.id or not data.adapter then
+            return
+          end
 
-            spinner.handles[args.data.id] = handle
-          end,
-        })
+          local old_handle = spinner.handles[data.id]
+          if old_handle then
+            old_handle:finish()
+          end
 
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "CodeCompanionRequestFinished",
-          group = group,
-          callback = function(args)
-            local handle = spinner.handles[args.data.id]
-            spinner.handles[args.data.id] = nil
+          spinner.handles[data.id] = progress.handle.create({
+            title = "",
+            message = " Sending...",
 
-            if not handle then
-              return
-            end
+            lsp_client = {
+              name = format_adapter(data.adapter),
+            },
+          })
+        end,
+      })
 
-            if args.data.status == "success" then
-              handle.message = spinner.completed
-            elseif args.data.status == "error" then
-              handle.message = spinner.error
-            else
-              handle.message = spinner.cancelled
-            end
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "CodeCompanionRequestFinished",
+        group = spinner_group,
 
-            handle:finish()
-          end,
-        })
-      end
+        callback = function(args)
+          local data = args.data or {}
 
-      codecompanion_spinner()
+          if not data.id then
+            return
+          end
+
+          local handle = spinner.handles[data.id]
+          spinner.handles[data.id] = nil
+
+          if not handle then
+            return
+          end
+
+          if data.status == "success" then
+            handle.message = spinner.completed
+          elseif data.status == "error" then
+            handle.message = spinner.error
+          else
+            handle.message = spinner.cancelled
+          end
+
+          handle:finish()
+        end,
+      })
     end,
   },
 }

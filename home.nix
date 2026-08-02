@@ -22,6 +22,17 @@ let
     doCheck = false;
     doInstallCheck = false;
   });
+
+  mcpServerGit = pkgs.writeShellApplication {
+    name = "mcp-server-git";
+    runtimeInputs = [
+      pkgs.uv
+      pkgs.git
+    ];
+    text = ''
+      exec uvx mcp-server-git "$@"
+    '';
+  };
 in
 {
   home.stateVersion = "25.05";
@@ -155,6 +166,9 @@ in
     git-lfs
     delta
     lazygit
+
+    # MCP
+    mcpServerGit
 
     # Containers
     lazydocker
