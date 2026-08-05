@@ -1,5 +1,7 @@
+-- Editor
+
 vim.keymap.set('v', '<leader>y', '"+y')
-vim.keymap.set('n', '<leader>p', '"+p')
+vim.keymap.set('n', '<leader>pp', '"+p')
 vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>wt', [[:%s/\s\+$//e<CR>]],
   { noremap = true, silent = true, desc = "Trim trailing whitespaces" })
@@ -12,7 +14,6 @@ vim.keymap.set('v', '>', '>gv', { noremap = true, desc = "Indent right" })
 vim.keymap.set('v', '<', '<gv', { noremap = true, desc = "Unindent left" })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true, desc = "Exit terminal mode" })
 vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>", { noremap = true, desc = "Restart LSP" })
-
 
 --- Plugins
 
@@ -64,8 +65,6 @@ vim.keymap.set("n", "<leader><leader>", "<cmd>Telescope oldfiles<cr>", { desc = 
 vim.keymap.set("n", "<leader>lg", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
 vim.keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 
---- GitBlame
-vim.keymap.set("n", "<leader>gbt", ":GitBlameToggle<CR>", { desc = "Git Blame: Toggle", noremap = true })
 -- PlatformIO
 vim.keymap.set("n", "<leader>pin", ":Pioinit<CR>", { desc = "PlatformIO: Init", noremap = true })
 vim.keymap.set("n", "<leader>pic", ":Piorun clean<CR>", { desc = "PlatformIO: Clean", noremap = true })
@@ -125,6 +124,161 @@ vim.keymap.set("n", "<leader>apn", function()
   require("codecompanion").prompt("nvim-plugin")
 end, {
   desc = "AI: Neovim plugin agent",
+  noremap = true,
+  silent = true,
+})
+
+--- Gitsigns
+
+vim.keymap.set("n", "]h", function()
+  require("gitsigns").nav_hunk("next")
+end, {
+  desc = "Git: Next hunk",
+  silent = true,
+})
+
+vim.keymap.set("n", "[h", function()
+  require("gitsigns").nav_hunk("prev")
+end, {
+  desc = "Git: Previous hunk",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gp", function()
+  require("gitsigns").preview_hunk()
+end, {
+  desc = "Git: Preview hunk",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gi", function()
+  require("gitsigns").preview_hunk_inline()
+end, {
+  desc = "Git: Preview hunk inline",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gs", function()
+  require("gitsigns").stage_hunk()
+end, {
+  desc = "Git: Stage/unstage hunk",
+  silent = true,
+})
+
+vim.keymap.set("v", "<leader>gs", function()
+  require("gitsigns").stage_hunk({
+    vim.fn.line("v"),
+    vim.fn.line("."),
+  })
+end, {
+  desc = "Git: Stage selected lines",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gr", function()
+  require("gitsigns").reset_hunk()
+end, {
+  desc = "Git: Reset hunk",
+  silent = true,
+})
+
+vim.keymap.set("v", "<leader>gr", function()
+  require("gitsigns").reset_hunk({
+    vim.fn.line("v"),
+    vim.fn.line("."),
+  })
+end, {
+  desc = "Git: Reset selected lines",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gS", function()
+  require("gitsigns").stage_buffer()
+end, {
+  desc = "Git: Stage buffer",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gR", function()
+  require("gitsigns").reset_buffer()
+end, {
+  desc = "Git: Reset buffer",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gD", function()
+  require("gitsigns").diffthis()
+end, {
+  desc = "Git: Diff current buffer",
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gb", function()
+  require("gitsigns").blame_line({ full = true })
+end, {
+  desc = "Git: Blame current line",
+  silent = true,
+})
+
+vim.keymap.set({ "o", "x" }, "ih", function()
+  require("gitsigns").select_hunk()
+end, {
+  desc = "Git: Select hunk",
+  silent = true,
+})
+
+--- Diffview
+
+vim.keymap.set("n", "<leader>gdo", "<cmd>DiffviewOpen<CR>", {
+  desc = "Git Diffview: Open working tree",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", {
+  desc = "Git Diffview: Close",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gdt", "<cmd>DiffviewToggleFiles<CR>", {
+  desc = "Git Diffview: Toggle files panel",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gdf", "<cmd>DiffviewFocusFiles<CR>", {
+  desc = "Git Diffview: Focus files panel",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gdr", "<cmd>DiffviewRefresh<CR>", {
+  desc = "Git Diffview: Refresh",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gdh", "<cmd>DiffviewFileHistory %<CR>", {
+  desc = "Git Diffview: Current file history",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gdH", "<cmd>DiffviewFileHistory<CR>", {
+  desc = "Git Diffview: Repository history",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gdm", "<cmd>DiffviewOpen origin/main...HEAD<CR>", {
+  desc = "Git Diffview: Compare branch with origin/main",
+  noremap = true,
+  silent = true,
+})
+
+vim.keymap.set("n", "<leader>gds", "<cmd>DiffviewOpen --cached<CR>", {
+  desc = "Git Diffview: Show staged changes",
   noremap = true,
   silent = true,
 })
