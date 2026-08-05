@@ -33,6 +33,61 @@ return {
             roles = {
               user = "mm4cn",
             },
+
+            tools = {
+              file_search = {
+                opts = {
+                  max_results = 500,
+                },
+              },
+
+              grep_search = {
+                opts = {
+                  max_results = 100,
+                  respect_gitignore = true,
+                  require_approval_before = false,
+                },
+              },
+
+              read_file = {
+                opts = {
+                  require_approval_before = false,
+                },
+              },
+
+              get_changed_files = {
+                opts = {
+                  max_lines = 1000,
+                },
+              },
+
+              get_diagnostics = {},
+
+              run_command = {
+                opts = {
+                  allowed_in_yolo_mode = false,
+                  require_approval_before = true,
+                  require_cmd_approval = true,
+                  judge_in_yolo_mode = false,
+                  timeout = 300000,
+                },
+              },
+
+              opts = {
+                default_tools = {
+                  "file_search",
+                  "grep_search",
+                  "read_file",
+                  "get_changed_files",
+                  "get_diagnostics",
+                  "run_command",
+                },
+
+                auto_submit_success = true,
+                auto_submit_errors = true,
+                notify_on_approval = true,
+              },
+            },
           },
 
           inline = {
@@ -110,13 +165,6 @@ return {
                 index_on_startup = false,
               },
             },
-          },
-        },
-
-        tools = {
-          opts = {
-            auto_submit_success = true,
-            auto_submit_errors = true,
           },
         },
 
