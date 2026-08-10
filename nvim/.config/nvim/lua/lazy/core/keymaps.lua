@@ -370,11 +370,11 @@ map("v", "<leader>gs", function()
   })
 end, "Git: Stage selected lines")
 
-map("n", "<leader>gr", function()
+map("n", "<leader>grh", function()
   require("gitsigns").reset_hunk()
 end, "Git: Reset hunk")
 
-map("v", "<leader>gr", function()
+map("v", "<leader>grh", function()
   require("gitsigns").reset_hunk({
     vim.fn.line("v"),
     vim.fn.line("."),
