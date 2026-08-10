@@ -467,3 +467,93 @@ cmd(
   "DiffviewOpen --cached",
   "Git Diffview: Show staged changes"
 )
+
+-- GitLab
+
+cmd(
+  "n",
+  "<leader>gla",
+  "GitlabAuth",
+  "GitLab: Authenticate"
+)
+
+cmd(
+  "n",
+  "<leader>glh",
+  "GitlabHealth",
+  "GitLab: Health check"
+)
+
+cmd(
+  "n",
+  "<leader>glv",
+  "GitlabCiValidate",
+  "GitLab CI: Validate"
+)
+
+-- Pipelines
+
+cmd(
+  "n",
+  "<leader>glpr",
+  "GitlabPipelineRun",
+  "GitLab Pipeline: Run"
+)
+
+cmd(
+  "n",
+  "<leader>glpl",
+  "GitlabPipelineList",
+  "GitLab Pipeline: List"
+)
+
+cmd(
+  "n",
+  "<leader>glps",
+  "GitlabPipelineStatus",
+  "GitLab Pipeline: Status"
+)
+
+cmd(
+  "n",
+  "<leader>glpd",
+  "GitlabPipelineDetails",
+  "GitLab Pipeline: Details"
+)
+
+-- Jobs
+
+cmd(
+  "n",
+  "<leader>gljl",
+  "GitlabJobList",
+  "GitLab Job: List"
+)
+
+cmd(
+  "n",
+  "<leader>gljr",
+  "GitlabJobRetry",
+  "GitLab Job: Retry"
+)
+
+cmd(
+  "n",
+  "<leader>gljg",
+  "GitlabJobLogs",
+  "GitLab Job: Logs"
+)
+
+cmd(
+  "n",
+  "<leader>gljd",
+  "GitlabJobDetails",
+  "GitLab Job: Details"
+)
+
+cmd(
+  "n",
+  "<leader>glja",
+  "GitlabJobArtifacts",
+  "GitLab Job: Artifacts"
+)
