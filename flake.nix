@@ -58,7 +58,7 @@
           username = "marekmacznik";
           homeDirectory = "/Users/marekmacznik";
           extraModules = [
-            ({pkgs, ...}: {home.packages = [ pkgs.python313 pkgs.cmake ]; })
+            ({pkgs, ...}: {home.packages = [ pkgs.python313 pkgs.cmake pkgs.claude-code pkgs.claude-agent-acp ]; })
           ];
       };
 
