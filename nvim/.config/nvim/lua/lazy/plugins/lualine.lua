@@ -34,6 +34,16 @@ return {
     end
 
     local conan_status = require("conan_status")
+
+    local function gitlab_status()
+      local status = require("gitlab.statusline").get()
+
+      if not status or not status.text then
+        return ""
+      end
+
+      return ": " .. status.text
+    end
     require("lualine").setup({
       options = {
         icons_enabled = true,
@@ -43,7 +53,7 @@ return {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
         lualine_c = { "filename", "filesize", "macro_recording", "%S" },
-        lualine_x = { codecompanion_status, conan_status.component, "selectioncount", "searchcount", "encoding", "fileformat", "filetype" },
+        lualine_x = { codecompanion_status, gitlab_status, conan_status.component, "selectioncount", "searchcount", "encoding", "fileformat", "filetype" },
         lualine_y = { "progress" },
         lualine_z = { "location" },
       }
