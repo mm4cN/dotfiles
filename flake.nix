@@ -62,9 +62,7 @@
               pkgs.python313 
               pkgs.cmake 
               pkgs.claude-code 
-              pkgs.claude-agent-acp 
               pkgs.codex 
-              pkgs.codex-acp 
               ]; 
             })
           ];
