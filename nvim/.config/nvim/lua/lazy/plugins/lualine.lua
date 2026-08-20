@@ -42,7 +42,7 @@ return {
         return ""
       end
 
-      return ": " .. status.text
+      return status.text
     end
     require("lualine").setup({
       options = {
