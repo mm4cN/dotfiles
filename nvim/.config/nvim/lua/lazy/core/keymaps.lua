@@ -219,22 +219,6 @@ cmd(
   "Move line up"
 )
 
--- NvimTree
-
-cmd(
-  "n",
-  "<leader>ee",
-  "NvimTreeToggle",
-  "Toggle file explorer"
-)
-
-cmd(
-  "n",
-  "<leader>ef",
-  "NvimTreeFindFileToggle",
-  "Toggle file explorer on current file"
-)
-
 -- Telescope
 
 cmd(
@@ -511,3 +495,13 @@ cmd(
   "GitlabJobList",
   "GitLab Job: List"
 )
+
+-- Mini Files
+
+map("n", "<leader>ee", function()
+  require("mini.files").open()
+end, "File explorer: Open")
+
+map("n", "<leader>ef", function()
+  require("mini.files").open(vim.api.nvim_buf_get_name(0))
+end, "File explorer: Open current file")
