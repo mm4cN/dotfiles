@@ -249,4 +249,6 @@ in
   home.file.".tmux.conf".source = ./tmux/.tmux.conf;
 
   home.file.".copilot/mcp-config.json".source = ./copilot/.copilot/mcp-config.json;
+
+  home.file.".local/share/nvim/agent-skills".source = ./agent-skills;
 }

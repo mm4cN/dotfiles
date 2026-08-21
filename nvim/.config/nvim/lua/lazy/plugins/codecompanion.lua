@@ -104,8 +104,8 @@ return {
             opts = {
               disable_demo_skill = true,
               paths = {
-                { vim.fn.stdpath('data') .. "/skills", recursive = true },
-                { ".skills",                           recursive = true },
+                { vim.fn.stdpath('data') .. "/agent-skills", recursive = true },
+                { ".skills",                                 recursive = true },
               },
             },
           },
