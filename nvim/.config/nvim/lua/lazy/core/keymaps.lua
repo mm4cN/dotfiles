@@ -505,3 +505,27 @@ end, "File explorer: Open")
 map("n", "<leader>ef", function()
   require("mini.files").open(vim.api.nvim_buf_get_name(0))
 end, "File explorer: Open current file")
+
+-- Harpoon
+local harpoon = require('harpoon')
+local conf = require("telescope.config").values
+local function toggle_telescope(harpoon_files)
+    local file_paths = {}
+    for _, item in ipairs(harpoon_files.items) do
+        table.insert(file_paths, item.value)
+    end
+
+    require("telescope.pickers").new({}, {
+        prompt_title = "Harpoon",
+        finder = require("telescope.finders").new_table({
+            results = file_paths,
+        }),
+        previewer = conf.file_previewer({}),
+        sorter = conf.generic_sorter({}),
+    }):find()
+end
+map("n", "<C-a>", function() harpoon:list():add() end)
+map("n", "<C-d>", function() harpoon:list():remove() end)
+map("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, "Open harpoon window")
+map("n", "<S-P>", function() harpoon:list():prev() end)
+map("n", "<S-N>", function() harpoon:list():next() end)
