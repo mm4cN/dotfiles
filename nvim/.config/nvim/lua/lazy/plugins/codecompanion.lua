@@ -1,7 +1,7 @@
 local function copilot()
   return {
     name = "copilot",
-    model = "claude-sonnet-4.5",
+    model = "claude-haiku-4.5",
   }
 end
 
@@ -15,12 +15,11 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "ravitemer/codecompanion-history.nvim",
-
+      "cairijun/codecompanion-agentskills.nvim",
       {
         "bahaaza/mcphub.nvim",
         name = "mcphub.nvim",
       },
-
       "j-hui/fidget.nvim",
     },
 
@@ -81,6 +80,7 @@ return {
                   "get_changed_files",
                   "get_diagnostics",
                   "run_command",
+                  "agent_skills",
                 },
 
                 auto_submit_success = true,
@@ -100,9 +100,18 @@ return {
         },
 
         extensions = {
+          agentskills = {
+            opts = {
+              disable_demo_skill = true,
+              paths = {
+                { vim.fn.stdpath('data') .. "/skills", recursive = true },
+                { ".skills",                           recursive = true },
+              },
+            },
+          },
+
           mcphub = {
             callback = "mcphub.extensions.codecompanion",
-
             opts = {
               make_vars = false,
               make_tools = true,
@@ -125,13 +134,11 @@ return {
               auto_generate_title = true,
               continue_last_chat = false,
               delete_on_clearing_chat = false,
-
               dir_to_save = vim.fn.stdpath("data")
                   .. "/codecompanion-history",
-
               title_generation_opts = {
                 adapter = "copilot",
-                model = "claude-sonnet-4.5",
+                model = "claude-haiku-4.5",
                 refresh_every_n_prompts = 0,
                 max_refreshes = 3,
 
@@ -143,10 +150,9 @@ return {
               summary = {
                 create_summary_keymap = "gcs",
                 browse_summaries_keymap = "gbs",
-
                 generation_opts = {
                   adapter = "copilot",
-                  model = "claude-sonnet-4.5",
+                  model = "claude-haiku-4.5",
                   context_size = 90000,
                   include_references = true,
                   include_tool_outputs = true,
@@ -156,11 +162,9 @@ return {
               memory = {
                 auto_create_memories_on_summary_generation = true,
                 vectorcode_exe = "vectorcode",
-
                 tool_opts = {
                   default_num = 10,
                 },
-
                 notify = true,
                 index_on_startup = false,
               },
@@ -180,7 +184,7 @@ return {
             separator = "─",
             show_settings = false,
             show_token_count = true,
-            show_reasoning = false,
+            show_reasoning = true,
             fold_context = true,
 
             window = {
@@ -217,22 +221,6 @@ return {
     config = function(_, opts)
       require("codecompanion").setup(opts)
 
-      local treesitter_group = vim.api.nvim_create_augroup(
-        "mm4cn.codecompanion.treesitter",
-        { clear = true }
-      )
-
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "codecompanion",
-        group = treesitter_group,
-
-        callback = function(args)
-          if not vim.treesitter.highlighter.active[args.buf] then
-            pcall(vim.treesitter.start, args.buf, "markdown")
-          end
-        end,
-      })
-
       local ok, progress = pcall(require, "fidget.progress")
       if not ok then
         return
@@ -252,8 +240,8 @@ return {
 
         local parts = {
           adapter.formatted_name
-              or adapter.name
-              or "CodeCompanion",
+          or adapter.name
+          or "CodeCompanion",
         }
 
         local model = adapter.model

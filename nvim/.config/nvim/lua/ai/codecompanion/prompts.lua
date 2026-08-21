@@ -7,13 +7,13 @@ local prompts = {
     file = "cpp-conan.md",
     alias = "cpp-conan",
     title = "Agent: C++ / Conan",
-    description = "C++17/20/23, CMake, Conan 2, testy, refactor, build errors",
+    description = "C++17/20/23, CMake, Conan 2, tests, refactor, build errors",
   },
   {
     file = "rust.md",
     alias = "rust",
     title = "Agent: Rust",
-    description = "Rust, Cargo, FFI, async, błędy borrow checkera",
+    description = "Rust, Cargo, FFI, async, borrow checker issues",
   },
   {
     file = "gitlab-ci.md",
