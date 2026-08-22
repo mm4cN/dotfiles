@@ -99,6 +99,21 @@ return {
           },
         },
 
+        rules = {
+          default = {
+            description = "Default rules applicable for project",
+            files = {
+              ".rules",
+              ".github/copilot-instructions.md",
+              "AGENT.md",
+              "AGENTS.md",
+              { path = "CLAUDE.md",           parser = "claude" },
+              { path = "CLAUDE.local.md",     parser = "claude" },
+              { path = "~/.claude/CLAUDE.md", parser = "claude" },
+            },
+          },
+        },
+
         extensions = {
           agentskills = {
             opts = {
