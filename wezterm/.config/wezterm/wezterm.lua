@@ -12,6 +12,7 @@ config.front_end = "OpenGL"
 config.max_fps = 120
 config.term = "xterm-256color"
 config.window_background_opacity = 0.85
+config.macos_window_background_blur = 20
 
 config.enable_tab_bar = false
 config.use_fancy_tab_bar = false
