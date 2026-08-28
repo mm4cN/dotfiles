@@ -524,11 +524,11 @@ local function toggle_telescope(harpoon_files)
     sorter = conf.generic_sorter({}),
   }):find()
 end
-map("n", "<C-a>", function() harpoon:list():add() end)
-map("n", "<C-d>", function() harpoon:list():remove() end)
-map("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, "Open harpoon window")
-map("n", "<S-P>", function() harpoon:list():prev() end)
-map("n", "<S-N>", function() harpoon:list():next() end)
+map("n", "<leader>a", function() harpoon:list():add() end)
+map("n", "<leader>d", function() harpoon:list():remove() end)
+map("n", "<leader>e", function() toggle_telescope(harpoon:list()) end, "Open harpoon window")
+map("n", "<leader>P", function() harpoon:list():prev() end)
+map("n", "<leader>N", function() harpoon:list():next() end)
 
 map('n', '<C-j>', ':MoveLine(1)<CR>', "Move line down")
 map('n', '<C-k>', ':MoveLine(-1)<CR>', "Move line up")
