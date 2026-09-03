@@ -1,6 +1,6 @@
 # dotfiles
 
-My development environment for macOS, managed with **Nix + Home Manager**.
+My development environment for **macOS and Linux**, managed with **Nix + Home Manager**.
 
 The goal is simple: keep the workstation reproducible, keep configuration versioned, and make rebuilding the environment considerably less painful than remembering what I installed six months ago.
 
