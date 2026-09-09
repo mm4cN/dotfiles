@@ -112,27 +112,6 @@ cmd(
 
 cmd(
   "n",
-  "<leader>coc",
-  "Conan create",
-  "Conan: create"
-)
-
-cmd(
-  "n",
-  "<leader>coe",
-  "Conan export",
-  "Conan: export"
-)
-
-cmd(
-  "n",
-  "<leader>cop",
-  "Conan export_package",
-  "Conan: export_package"
-)
-
-cmd(
-  "n",
   "<leader>cou",
   "Conan upload",
   "Conan: upload"
