@@ -160,6 +160,7 @@ in
     # Editor
     neovim
     tree-sitter
+    stylua
 
     # Git
     git
