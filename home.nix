@@ -234,8 +234,8 @@ in
     hyperfine
 
     # General programming
-    bear
-    ccache
+    # bear
+    # ccache
 
     # Utilities
     nixd
@@ -244,12 +244,8 @@ in
   ];
 
   home.file.".config/nvim".source = ./nvim/.config/nvim;
-
   home.file.".config/wezterm".source = ./wezterm/.config/wezterm;
-
   home.file.".tmux.conf".source = ./tmux/.tmux.conf;
-
   home.file.".copilot/mcp-config.json".source = ./copilot/.copilot/mcp-config.json;
-
   home.file.".local/share/nvim/agent-skills".source = ./agent-skills;
 }
